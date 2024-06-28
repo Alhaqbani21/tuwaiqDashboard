@@ -24,7 +24,7 @@ function StudentPage() {
 
   const navigate = useNavigate();
 
-  if (userId && studentName) {
+  if (userId) {
     useEffect(() => {
       fetchData();
     }, [userId]);
