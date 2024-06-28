@@ -43,7 +43,8 @@ function AdminPage() {
 
   return (
     <>
-      <NavBar name={userdata.userName} />
+      <NavBar name={userdata.userName} rightTitle={'تسجيل خروج'} />
+
       <div className="h-screen">
         <SideBar />
         <div

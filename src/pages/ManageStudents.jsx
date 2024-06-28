@@ -3,8 +3,9 @@ import axios from 'axios';
 import SideBar from '../components/SideBar';
 import NavBar from '../components/NavBar';
 import SearchInput from '../components/SearchInput';
+import AlertToast from '../components/AlertToast';
 
-function ViewStudents() {
+function ManageStudents() {
   const userId = localStorage.getItem('id');
   const urlUsers = 'https://667e0138297972455f66dc2e.mockapi.io/users';
   const adminName = localStorage.getItem('adminName');
@@ -13,6 +14,9 @@ function ViewStudents() {
   const [data, setdata] = useState([]);
   const [searchInputValue, setsearchInputValue] = useState('');
   const [filteredUsers, setFilteredUsers] = useState([]);
+  const [showAlertModal, setshowAlertModal] = useState(false);
+  const [userToDelete, setuserToDelete] = useState({});
+  const [deleteAlert, setdeleteAlert] = useState(false);
 
   if (userId) {
     useEffect(() => {
@@ -42,9 +46,74 @@ function ViewStudents() {
     setFilteredUsers(filtered);
   }
 
+  function handleDeleteAccount(id) {
+    setuserToDelete(
+      filteredUsers.find((user) => {
+        return user.id === id;
+      })
+    );
+
+    axios.delete(`${urlUsers}/${id}`).then((response) => {
+      console.log(response.data);
+      setshowAlertModal(false);
+      setdeleteAlert(true);
+      setFilteredUsers(
+        filteredUsers.filter((user) => {
+          return user.id !== userToDelete.id;
+        })
+      );
+      setTimeout(() => {
+        setdeleteAlert(false);
+      }, 2000);
+    });
+  }
+
   return (
     <>
       <NavBar name={adminName} rightTitle={'تسجيل خروج'} />
+      {deleteAlert && <AlertToast text={'تم حذف الحساب بنجاح'} />}
+      <dialog
+        dir="rtl"
+        id="my_modal_5"
+        className="modal modal-bottom sm:modal-middle"
+        open={showAlertModal}
+      >
+        <div className="modal-box">
+          <h3 className="font-bold text-2xl text-secondary">حذف حساب </h3>
+          <div className="avatar flex-col justify-center items-center gap-5 max-md:max-w-screen w-full my-3">
+            <label className="form-control w-full ">
+              <div className="label">
+                <span dir="rtl" className="label-text text-2xl">
+                  هل تريد حذف بيانات الطالب؟
+                </span>
+              </div>
+              <div className="text-primary">
+                {' '}
+                الاسم : {userToDelete.userName}
+              </div>
+              <div className="text-primary">
+                {' '}
+                البريد الإلكتروني : {userToDelete.email}{' '}
+              </div>
+            </label>
+          </div>
+          <div className="modal-action">
+            <div className="flex gap-5">
+              <button className="btn" onClick={() => setshowAlertModal(false)}>
+                الغاء
+              </button>
+              <button
+                onClick={() => {
+                  handleDeleteAccount(userToDelete.id);
+                }}
+                className="btn btn-primary"
+              >
+                حذف
+              </button>
+            </div>
+          </div>
+        </div>
+      </dialog>
       <div className="h-screen">
         <SideBar />
         <div
@@ -85,6 +154,9 @@ function ViewStudents() {
                   <th className="bg-primary p-2 text-white font-bold border border-gray-300 table-cell max-md:text-xs ">
                     الدور
                   </th>
+                  <th className="bg-primary p-2 text-white font-bold border border-gray-300 table-cell max-md:text-xs ">
+                    اجراء
+                  </th>
                 </tr>
               </thead>
               <tbody className="table-row-group max-h-[50vh] overflow-auto">
@@ -103,8 +175,19 @@ function ViewStudents() {
                         <td className="p-2 border text-primary-content border-gray-300 table-cell w-[33%] max-md:text-xs">
                           {user.email}
                         </td>
-                        <td className="p-2 border text-primary-content border-gray-300 table-cell w-[33%] max-md:text-xs">
+                        <td className="p-2 border text-primary-content border-gray-300 table-cell w-max max-md:text-xs">
                           {user.role}
+                        </td>
+                        <td className="p-2 border text-primary-content border-gray-300 table-cell w-max max-md:text-xs">
+                          <button
+                            onClick={() => {
+                              setshowAlertModal(true);
+                              setuserToDelete(user);
+                            }}
+                            className="btn btn-outline bg-orange-200 px-2 py-1 hover:bg-orange-100 hover:text-black"
+                          >
+                            حذف
+                          </button>
                         </td>
                       </tr>
                     ))}
@@ -123,4 +206,4 @@ function ViewStudents() {
   );
 }
 
-export default ViewStudents;
+export default ManageStudents;

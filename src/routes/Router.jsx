@@ -6,6 +6,7 @@ import Login from '../pages/Login';
 import AdminPage from '../pages/AdminPage';
 import StudentPage from '../pages/StudentPage';
 import ViewStudents from '../pages/ViewStudents';
+import ManageStudents from '../pages/ManageStudents';
 import ErrorPage from '../pages/ErrorPage';
 
 const router = createBrowserRouter([
@@ -25,6 +26,11 @@ const router = createBrowserRouter([
   {
     path: '/admin/viewstudents',
     element: <ViewStudents />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/admin/managment',
+    element: <ManageStudents />,
     errorElement: <ErrorPage />,
   },
   {

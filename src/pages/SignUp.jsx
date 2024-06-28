@@ -14,33 +14,36 @@ function SignUp() {
 
   function handleRegister() {
     let valid = true;
+    let errors = {};
+
     if (nameValue === '') {
-      seterrorField({ name: 'يجب تعبئة الحقل' });
+      errors.name = 'يجب تعبئة الحقل';
       valid = false;
     } else {
-      seterrorField({ name: '' });
+      errors.name = '';
     }
 
     const emailRegex = /^[^\s@]+@tuwaiq\.com$/;
 
     if (emailValue === '') {
-      seterrorField({ email: 'يجب تعبئة الحقل' });
+      errors.email = 'يجب تعبئة الحقل';
       valid = false;
     } else if (!emailRegex.test(emailValue)) {
-      seterrorField({ email: 'يجب ان يحتوي البريد على @tuwaiq.com' });
+      errors.email = 'يجب ان يحتوي البريد على @tuwaiq.com';
       valid = false;
     } else {
-      seterrorField({ email: '' });
+      errors.email = '';
     }
     if (passwordValue === '') {
-      seterrorField({ password: 'يجب تعبئة الحقل' });
+      errors.password = 'يجب تعبئة الحقل';
       valid = false;
     } else if (passwordValue.length < 8) {
-      seterrorField({ password: 'كلمة السر يجب ان تحتوي على 8 خانات' });
+      errors.password = 'كلمة السر يجب ان تحتوي على 8 خانات';
       valid = false;
     } else {
-      seterrorField({ password: '' });
+      errors.password = '';
     }
+    seterrorField(errors);
 
     if (valid) {
       axios
@@ -131,6 +134,9 @@ function SignUp() {
                 placeholder="********"
                 onChange={(e) => {
                   setpasswordValue(e.target.value);
+                }}
+                onKeyDown={(e) => {
+                  e.key === 'Enter' ? handleRegister() : null;
                 }}
               />
               <label className="text-red-400">{errorField.password}</label>

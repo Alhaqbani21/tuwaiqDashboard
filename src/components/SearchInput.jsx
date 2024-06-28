@@ -16,7 +16,7 @@ function SearchInput(props) {
         onChange={props.onChange}
         onKeyDown={props.onKeyDown}
       />
-      <button className="btn btn-primary rounded-full">
+      <button onClick={props.onClick} className="btn btn-primary rounded-full">
         <svg
           className="size-6 text-white "
           stroke="currentColor"
