@@ -94,7 +94,13 @@ function StudentPage() {
 
   return (
     <>
-      <NavBarUsers name={userdata.userName} rightTitle={'تسجيل خروج'} />
+      <NavBarUsers
+        onClickNewProject={() => {
+          setshowNewProjectModal(true);
+        }}
+        name={userdata.userName}
+        rightTitle={'تسجيل خروج'}
+      />
       {projectIdeaAlert && <AlertToast text={'تم إرسال الفكرة إلى المشرف'} />}
       <div className="h-full">
         <dialog

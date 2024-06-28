@@ -146,7 +146,7 @@ function ManageProjects() {
                   }
                 />
                 <div className="label">
-                  <span className="label-text-alt">Bottom Right label</span>
+                  {/* <span className="label-text-alt">Bottom Right label</span> */}
                 </div>
               </label>
               <label dir="rtl" className="form-control w-full max-w-xs">
@@ -166,7 +166,7 @@ function ManageProjects() {
                   }
                 />
                 <div className="label">
-                  <span className="label-text-alt">Bottom Right label</span>
+                  {/* <span className="label-text-alt">Bottom Right label</span> */}
                 </div>
               </label>
               <div className="text-primary">

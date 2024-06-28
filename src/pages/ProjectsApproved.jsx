@@ -97,7 +97,13 @@ function ProjectsApproved() {
   }
   return (
     <>
-      <NavBarUsers name={studentName} rightTitle={'تسجيل خروج'} />
+      <NavBarUsers
+        onClickNewProject={() => {
+          setshowNewProjectModal(true);
+        }}
+        name={studentName}
+        rightTitle={'تسجيل خروج'}
+      />
       {projectIdeaAlert && <AlertToast text={'تم إرسال الفكرة إلى المشرف'} />}
       <div className="h-screen">
         <dialog
