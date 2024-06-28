@@ -13,11 +13,17 @@ function AdminPage() {
   const userId = localStorage.getItem('id');
   const urlUser = `https://667e0138297972455f66dc2e.mockapi.io/users/${userId}`;
   const urlUsers = 'https://667e0138297972455f66dc2e.mockapi.io/users';
+  const urlProjects = 'https://667e0138297972455f66dc2e.mockapi.io/projects';
   const navigate = useNavigate();
+  const [dataProjects, setdataProjects] = useState([]);
+  const [approvedProjects, setApprovedProjects] = useState([]);
+  const [pendingProjects, setPendingProjects] = useState([]);
+  const [rejectProjects, setRejectProjects] = useState([]);
 
   if (userId) {
     useEffect(() => {
       fetchData();
+      fetchProjects();
     }, [userId]);
   } else {
     throw Error;
@@ -37,16 +43,33 @@ function AdminPage() {
       setdata(response.data);
       const admins = response.data.filter((user) => user.role === 'admin');
       setAdminsFound(admins);
-      console.log(admins);
     });
   }
 
+  function fetchProjects() {
+    axios.get(urlProjects).then((response) => {
+      const projects = response.data;
+      setdataProjects(projects);
+
+      const approved = projects.filter((project) => project.status === 'معتمد');
+      const pending = projects.filter(
+        (project) => project.status === 'قيد المراجعة'
+      );
+      const rejected = projects.filter(
+        (project) => project.status === 'مرفوضة'
+      );
+
+      setApprovedProjects(approved);
+      setRejectProjects(rejected);
+      setPendingProjects(pending);
+    });
+  }
   return (
     <>
       <NavBar name={userdata.userName} rightTitle={'تسجيل خروج'} />
 
       <div className="h-screen">
-        <SideBar />
+        <SideBar projectsNumber={dataProjects.length} />
         <div
           dir="rtl"
           className="text-right w-[80%] py-5 text-5xl text-secondary"
@@ -170,7 +193,7 @@ function AdminPage() {
 
           <Card
             text={'عدد المشاريع المرفوضة'}
-            number={adminsFound.length}
+            number={rejectProjects.length}
             bgColor={'bg-pink-700'}
             svg={
               <svg
@@ -201,7 +224,7 @@ function AdminPage() {
           />
           <Card
             text={'عدد المشاريع قيد المراجعة'}
-            number={data.length}
+            number={pendingProjects.length}
             bgColor={'bg-yellow-700'}
             svg={
               <svg
@@ -233,7 +256,7 @@ function AdminPage() {
 
           <Card
             text={'عدد المشاريع المعتمدة'}
-            number={adminsFound.length}
+            number={approvedProjects.length}
             bgColor={'bg-green-700'}
             svg={
               <svg

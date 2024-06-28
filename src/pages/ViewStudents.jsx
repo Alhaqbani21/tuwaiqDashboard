@@ -8,13 +8,14 @@ function ViewStudents() {
   const userId = localStorage.getItem('id');
   const urlUsers = 'https://667e0138297972455f66dc2e.mockapi.io/users';
   const adminName = localStorage.getItem('adminName');
-
+  const urlProjects = 'https://667e0138297972455f66dc2e.mockapi.io/projects';
   const [allusers, setallusers] = useState([]);
   const [data, setdata] = useState([]);
   const [searchInputValue, setsearchInputValue] = useState('');
   const [filteredUsers, setFilteredUsers] = useState([]);
+  const [dataProjects, setdataProjects] = useState([]);
 
-  if (userId) {
+  if (userId && adminName) {
     useEffect(() => {
       fetchData();
     }, [userId]);
@@ -29,6 +30,7 @@ function ViewStudents() {
       setallusers(students);
       setFilteredUsers(students);
     });
+    axios.get(urlProjects).then((response) => setdataProjects(response.data));
   }
   function handleSearch() {
     let filtered = allusers;
@@ -46,7 +48,8 @@ function ViewStudents() {
     <>
       <NavBar name={adminName} rightTitle={'تسجيل خروج'} />
       <div className="h-screen">
-        <SideBar />
+        <SideBar projectsNumber={dataProjects.length} />
+
         <div
           dir="rtl"
           className="text-right w-[80%] py-5 text-5xl text-secondary"
@@ -58,6 +61,7 @@ function ViewStudents() {
         </div>
         <SearchInput
           value={searchInputValue}
+          placeholder={'ابحث عن طالب'}
           onChange={(e) => {
             setsearchInputValue(e.target.value);
           }}

@@ -28,7 +28,7 @@ function Card(props) {
     >
       <div className="stat gap-2">
         {props.svg}
-        <div className="stat-title text-white text-2xl max-md:text-xl">
+        <div className="stat-title text-white text-2xl max-md:text-xl text-wrap max-w-96 max-md:max-w-60 ">
           {props.text}{' '}
         </div>
         <div className="stat-value text-secondary">{props.number}</div>

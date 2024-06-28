@@ -8,7 +8,7 @@ function SearchInput(props) {
     >
       <input
         dir="rtl"
-        placeholder="ابحث عن طالب"
+        placeholder={props.placeholder}
         className="input shadow-lg focus:border-2 border-gray-300 px-5 py-3 rounded-xl w-[50%] max-md:w-[70%]  transition-all  outline-none"
         name="search"
         type=""

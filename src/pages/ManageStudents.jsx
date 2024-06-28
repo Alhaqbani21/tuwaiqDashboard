@@ -8,6 +8,7 @@ import AlertToast from '../components/AlertToast';
 function ManageStudents() {
   const userId = localStorage.getItem('id');
   const urlUsers = 'https://667e0138297972455f66dc2e.mockapi.io/users';
+  const urlProjects = 'https://667e0138297972455f66dc2e.mockapi.io/projects';
   const adminName = localStorage.getItem('adminName');
 
   const [allusers, setallusers] = useState([]);
@@ -17,8 +18,9 @@ function ManageStudents() {
   const [showAlertModal, setshowAlertModal] = useState(false);
   const [userToDelete, setuserToDelete] = useState({});
   const [deleteAlert, setdeleteAlert] = useState(false);
+  const [dataProjects, setdataProjects] = useState([]);
 
-  if (userId) {
+  if (userId && adminName) {
     useEffect(() => {
       fetchData();
     }, [userId]);
@@ -33,6 +35,8 @@ function ManageStudents() {
       setallusers(students);
       setFilteredUsers(students);
     });
+
+    axios.get(urlProjects).then((response) => setdataProjects(response.data));
   }
   function handleSearch() {
     let filtered = allusers;
@@ -115,7 +119,8 @@ function ManageStudents() {
         </div>
       </dialog>
       <div className="h-screen">
-        <SideBar />
+        <SideBar projectsNumber={dataProjects.length} />
+
         <div
           dir="rtl"
           className="text-right w-[80%] py-5 text-5xl text-secondary"
@@ -127,6 +132,7 @@ function ManageStudents() {
         </div>
         <SearchInput
           value={searchInputValue}
+          placeholder={'ابحث عن طالب'}
           onChange={(e) => {
             setsearchInputValue(e.target.value);
           }}
