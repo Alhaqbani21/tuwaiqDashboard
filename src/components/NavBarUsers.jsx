@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import logo from '../assets/logo.png';
 
 function NavBarUsers(props) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -16,11 +17,7 @@ function NavBarUsers(props) {
         <ul className="menu flex justify-center items-center">
           <li>
             <Link className=" flex justify-center items-center">
-              <img
-                className="w-10"
-                src="https://res.cloudinary.com/speedwares/image/upload/v1659284687/windframe-logo-main_daes7r.png"
-                alt="Logo"
-              />
+              <img className="w-10" src={logo} alt="Logo" />
               <p className="text-2xl ">إدارة المشاريع</p>
             </Link>
           </li>
@@ -46,7 +43,7 @@ function NavBarUsers(props) {
                   {props.name}
                 </p>
                 <img
-                  src="https://img.icons8.com/?size=100&id=52233&format=png&color=000000"
+                  src="https://cdn.vectorstock.com/i/500p/53/42/user-member-avatar-face-profile-icon-vector-22965342.jpg"
                   className="object-cover h-9 w-9 rounded-full mr-2 bg-gray-300"
                   alt=""
                 />

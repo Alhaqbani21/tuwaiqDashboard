@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import logo from '../assets/logo.png';
 
 function NavBar(props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
-  };
-  const handleLogout = () => {
-    if (props.rightTitle === 'تسجيل خروج') {
-      localStorage.clear();
-    }
   };
 
   return (
@@ -21,11 +17,7 @@ function NavBar(props) {
         <ul className="menu flex justify-center items-center">
           <li>
             <Link className=" flex justify-center items-center">
-              <img
-                className="w-10"
-                src="https://res.cloudinary.com/speedwares/image/upload/v1659284687/windframe-logo-main_daes7r.png"
-                alt="Logo"
-              />
+              <img className="w-10" src={logo} alt="Logo" />
               <p className="text-2xl ">إدارة المشاريع</p>
             </Link>
           </li>
