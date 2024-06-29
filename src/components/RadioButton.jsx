@@ -2,7 +2,7 @@ import React from 'react';
 
 function RadioButton(props) {
   return (
-    <div>
+    <>
       <div className="label flex" dir="rtl">
         <span className="label-text text-right">{props.name}</span>
       </div>
@@ -52,7 +52,7 @@ function RadioButton(props) {
           {props.error}
         </span>
       </div>
-    </div>
+    </>
   );
 }
 

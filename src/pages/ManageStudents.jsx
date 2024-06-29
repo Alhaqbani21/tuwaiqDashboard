@@ -147,7 +147,10 @@ function ManageStudents() {
           dir="rtl"
           className=" w-[80%] flex items-center max-md:w-[100%] my-5"
         >
-          <div dir="rtl" className="w-[80%] max-md:w-[100%] overflow-x-auto">
+          <div
+            dir="rtl"
+            className="w-[80%] max-md:w-[100%] overflow-x-auto max-h-screen max-md:max-h-[70vh] overflow-y-auto"
+          >
             <table className=" border-collapse table ">
               <thead className="table-header-group">
                 <tr className="border border-gray-300 table-row">
@@ -165,7 +168,7 @@ function ManageStudents() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="table-row-group max-h-[50vh] overflow-auto">
+              <tbody className="table-row-group max-h-7">
                 {filteredUsers.length > 0 ? (
                   <>
                     {filteredUsers.map((user, index) => (

@@ -34,7 +34,7 @@ function ProjectsApproved() {
         })
       );
       const userProjects = response.data.filter(
-        (item) => item.status === 'معتمد'
+        (item) => item.authorId === userId
       );
       setmyProjects(userProjects);
 
@@ -184,7 +184,10 @@ function ProjectsApproved() {
           dir="rtl"
           className=" w-[80%] flex items-center max-md:w-[100%] my-5"
         >
-          <div dir="rtl" className="w-[80%] max-md:w-[100%] overflow-x-auto">
+          <div
+            dir="rtl"
+            className="w-[80%] max-md:w-[100%] overflow-x-auto max-h-screen max-md:max-h-[70vh] overflow-y-auto"
+          >
             <table className=" border-collapse table ">
               <thead className="table-header-group">
                 <tr className="border border-gray-300 table-row">

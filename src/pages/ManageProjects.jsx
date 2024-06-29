@@ -22,6 +22,7 @@ function ManageProjects() {
   const [editAlert, seteditalert] = useState(false);
   const [dataProjects, setdataProjects] = useState([]);
   const [statusRadio, setStatusRadio] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState('');
 
   useEffect(() => {
     if (userId && adminName) {
@@ -30,7 +31,7 @@ function ManageProjects() {
     } else {
       throw new Error('User ID or Admin Name is missing');
     }
-  }, [userId, adminName, dataProjects]);
+  }, [userId, adminName]);
 
   function fetchData() {
     axios.get(urlUsers).then((response) => {
@@ -58,6 +59,19 @@ function ManageProjects() {
     }
 
     setFilteredProjects(filtered);
+  }
+
+  function handleFilter(type) {
+    let filteredType = dataProjects;
+    filteredType = dataProjects.filter((project) => project.status === type);
+
+    if (selectedFilter === type) {
+      setSelectedFilter(''); // Deselect the filter if it's already selected
+      setFilteredProjects(dataProjects);
+    } else {
+      setSelectedFilter(type); // Select the new filter
+      setFilteredProjects(filteredType);
+    }
   }
 
   function handleDeleteAccount(id) {
@@ -183,7 +197,7 @@ function ManageProjects() {
                   setStatusRadio(e);
                 }}
                 value={projectToEdit.status}
-                error={setStatusRadio}
+                error={statusRadio}
               />
             </label>
           </div>
@@ -236,6 +250,38 @@ function ManageProjects() {
             handleSearch();
           }}
         />
+        <div
+          dir="rtl"
+          className="w-[80%] flex justify-start items-center max-md:w-[100%] my-5 gap-2"
+        >
+          <button
+            onClick={() => handleFilter('معتمد')}
+            className={`btn ${
+              selectedFilter === 'معتمد' ? 'bg-orange-400' : 'btn-primary'
+            } `}
+          >
+            معتمد
+          </button>
+          <button
+            onClick={() => handleFilter('قيد المراجعة')}
+            className={`btn ${
+              selectedFilter === 'قيد المراجعة'
+                ? 'bg-orange-400'
+                : 'btn-primary'
+            } `}
+          >
+            قيد المراجعة
+          </button>
+          <button
+            onClick={() => handleFilter('مرفوضة')}
+            className={`btn ${
+              selectedFilter === 'مرفوضة' ? 'bg-orange-400' : 'btn-primary'
+            } `}
+          >
+            مرفوضة
+          </button>
+        </div>
+
         <div
           dir="rtl"
           className=" w-[80%] flex items-center max-md:w-[100%] my-5"
