@@ -16,7 +16,7 @@ function NavBar(props) {
       <div className="flex-1 max-md:w-full max-md:flex max-md:justify-between">
         <ul className="menu flex justify-center items-center">
           <li>
-            <Link className=" flex justify-center items-center">
+            <Link to={'../admin'} className=" flex justify-center items-center">
               <img className="w-10" src={logo} alt="Logo" />
               <p className="text-2xl ">إدارة المشاريع</p>
             </Link>
